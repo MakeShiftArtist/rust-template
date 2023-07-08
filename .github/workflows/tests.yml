@@ -51,8 +51,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache Rust and cargo-llvm-cov
-        id: cache
+      - name: Cache Rust
+        id: rust-cache
         uses: actions/cache@v3
         with:
           path: |
@@ -60,16 +60,24 @@ jobs:
             ~/.cargo/git
             ~/.cargo/bin
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-rust-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo-llvm-cov
+        id: cargo-llvm-cov-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/cargo-llvm-cov
+          key: ${{ runner.os }}-cargo-llvm-cov-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Set up Rust
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.rust-cache.outputs.cache-hit != 'true'
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
 
       - name: Install cargo-llvm-cov
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cargo-llvm-cov-cache.outputs.cache-hit != 'true'
         run: cargo install cargo-llvm-cov
 
       - name: Run tests
