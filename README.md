@@ -60,7 +60,7 @@ To disable the workflow, you can comment out or remove the `.github/workflows/te
 
 ## License
 
-This project is licensed under the [GNU GPL 3.0 License](LICENSE). Feel free to modify and use it to suit your needs.
+This project is licensed under the [MIT License](LICENSE). Feel free to modify and use it to suit your needs.
 
 ---
 
