@@ -6,10 +6,6 @@ fn main() {
     log::info!("Improved logging is working!");
 }
 
-
-
-
-
 // This just sets up your logger. It should only be done once for the lifetime of the program
 fn get_logger() {
     load_env();
